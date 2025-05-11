@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mother's Day Surprise</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://img.freepik.com/premium-photo/mother-s-day-greeting-card-with-heart-that-says-happy-mothers-day_913495-7848.jpg?w=1800') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    h1 {
+      color: #e91e63;
+    }
+
+    input, select {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #nextButton {
+      padding: 10px 20px;
+      background-color: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .gift-box {
+      width: 100px;
+      height: 100px;
+      background: #e91e63;
+      margin: 50px auto;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gift-box:before {
+      display: none;
+    }
+
+    .gift-img {
+      width: 30%;
+      height: 30%;
+      object-fit: cover;
+    }
+
+    .message {
+      display: none;
+      font-size: 16px;
+      color: #d63384;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .final-message {
+      font-size: 20px;
+      color: #e91e63;
+    }
+
+    .final-message span {
+      font-size: 36px;
+    }
+
+    p {
+      text-align: center;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="page1">
+    <h1>Mother's Day Surprise</h1>
+    <input type="text" id="momName" placeholder="Enter Mom's Name" required />
+    <select id="languageSelect">
+      <option value="">Select Language</option>
+      <option value="english">English</option>
+      <option value="hindi">Hindi</option>
+      <option value="telugu">Telugu</option>
+    </select>
+    <button id="nextButton" onclick="goToNextPage()">Next Page</button>
+  </div>
+
+  <div class="container" id="page2" style="display: none;">
+    <h1>Mother's Day Surprise - Gift</h1>
+    <div class="" onclick="showMessage()">
+      <img src="Mother.jpg" alt="Mom" class="gift-img" />
+    </div>
+    <div class="message" id="giftMessage">
+      <p id="page2para1"></p>
+      <p id="page2para2"></p>
+      <button id="nextButtonPage2" onclick="goToFinalPage()" style="margin-top: 20px;">Next</button>
+    </div>
+  </div>
+
+  <div class="container" id="page3" style="display: none;">
+    <div class="final-message" id="finalMessage">
+      <p id="finalPara1"></p>
+      <p id="finalPara2"></p>
+      <p><span>😘😘😘</span></p>
+    </div>
+  </div>
+
+  <script>
+    let selectedLanguage = '';
+
+    const translations = {
+      english: {
+        page2para1: "Thank you for all the sacrifices you make for your family. You are the true hero of the household.",
+        page2para2: "Mothers are the silent architects of our lives, weaving love, resilience, and wisdom into the very fabric of our being.",
+        finalPara1: "Thank you, Mummy!",
+        finalPara2: "From bedtime stories to life lessons, you've filled my life with warmth and wisdom. Your sacrifices have not gone unnoticed. Happy Mother's Day!"
+      },
+      hindi: {
+        page2para1: "आपके सभी बलिदानों के लिए धन्यवाद। आप हमारे परिवार की असली हीरो हैं।",
+        page2para2: "माएँ हमारे जीवन की मौन निर्माता हैं, जो प्रेम, सहनशीलता और ज्ञान से हमारे जीवन को संवारती हैं।",
+        finalPara1: "धन्यवाद मम्मी!",
+        finalPara2: "आपने हर कदम पर साथ दिया। आपकी ममता और बलिदान अनमोल हैं। मातृ दिवस की शुभकामनाएँ!सोने से पहले सुनाई जाने वाली कहानियों से लेकर जीवन के सबक तक, आपने मेरे जीवन को गर्मजोशी और ज्ञान से भर दिया है। आपके बलिदानों को अनदेखा नहीं किया जा सकता। हैप्पी मदर्स डे!"
+      },
+      telugu: {
+        page2para1: "మీ త్యాగాలకు ధన్యవాదాలు. మీరు మా ఇంటికి నిజమైన హీరో.",
+        page2para2: "నిద్రవేళ కథల నుండి జీవిత పాఠాల వరకు, మీరు నా జీవితాన్ని వెచ్చదనం మరియు జ్ఞానంతో నింపారు. మీ త్యాగాలు గుర్తించబడకుండా పోలేదు. మాతృ దినోత్సవ శుభాకాంక్షలు!",
+        finalPara1: "ధన్యవాదాలు అమ్మా!",
+        finalPara2: "మీ ప్రేమ, బోధనలు, త్యాగాలు ఎప్పటికీ మరచిపోలేనివి. హ్యాపీ మదర్స్ డే!"
+      }
+    };
+
+    function goToNextPage() {
+      const languageSelect = document.getElementById('languageSelect');
+      selectedLanguage = languageSelect.value;
+      if (selectedLanguage) {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'block';
+      } else {
+        alert('Please select a language.');
+      }
+    }
+
+    function showMessage() {
+      const t = translations[selectedLanguage];
+      document.getElementById('page2para1').innerText = t.page2para1;
+      document.getElementById('page2para2').innerText = t.page2para2;
+      document.getElementById('giftMessage').style.display = 'block';
+    }
+
+    function goToFinalPage() {
+      const t = translations[selectedLanguage];
+      document.getElementById('finalPara1').innerText = t.finalPara1;
+      document.getElementById('finalPara2').innerText = t.finalPara2;
+      document.getElementById('page2').style.display = 'none';
+      document.getElementById('page3').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
